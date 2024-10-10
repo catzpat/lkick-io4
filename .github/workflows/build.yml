@@ -11,28 +11,34 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: 'recursive'
+          submodules: recursive
           
-      # Install necessary dependencies
+      # Install necessary dependencies for building
       - run: |
           sudo apt update
           sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential ninja-build git
 
       # Clone pico-sdk and initialize submodules
-      - run: |
+      - name: Clone pico-sdk
+        run: |
           git clone https://github.com/raspberrypi/pico-sdk.git
           cd pico-sdk
           git submodule update --init
+
+      # Set up build environment with PICO SDK path
+      - name: Set up environment
+        run: |
+          echo "PICO_SDK_PATH=$(pwd)/pico-sdk" >> $GITHUB_ENV
           
-      # Create the build directory, set up the pico-sdk path, and build
+      # Create build directory and build the project
       - run: |
           mkdir build
           cd build
-          cmake -G Ninja .. -DPICO_SDK_PATH=../pico-sdk
+          cmake -G Ninja .. -DPICO_SDK_PATH=$PICO_SDK_PATH
           ninja
-          
-      # Upload the generated UF2 firmware file as an artifact
-      - uses: actions/upload-artifact@v4
+
+      # Upload the generated UF2 file as an artifact
+      - uses: actions/upload-artifact@v3  # Corrected to v3
         with:
           name: firmware.uf2
           path: build/**/*.uf2

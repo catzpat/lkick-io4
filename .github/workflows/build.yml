@@ -16,7 +16,7 @@ jobs:
       # Install necessary dependencies for building
       - run: |
           sudo apt update
-          sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential ninja-build git
+          sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential ninja-build git pkg-config libusb-1.0-0-dev
 
       # Clone pico-sdk and initialize submodules
       - name: Clone pico-sdk
@@ -34,7 +34,7 @@ jobs:
       - run: |
           mkdir build
           cd build
-          cmake -G Ninja .. -DPICO_SDK_PATH=$PICO_SDK_PATH
+          cmake -G Ninja .. -DPICO_SDK_PATH=$PICO_SDK_PATH -DPICO_BOARD=rpipico
           ninja
 
       # Upload the generated UF2 file as an artifact

@@ -5,20 +5,34 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # Checkout the repository and submodules
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: 'recursive'
+          
+      # Install necessary dependencies
       - run: |
           sudo apt update
-          sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential ninja-build
+          sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential ninja-build git
+
+      # Clone pico-sdk and initialize submodules
+      - run: |
+          git clone https://github.com/raspberrypi/pico-sdk.git
+          cd pico-sdk
+          git submodule update --init
+          
+      # Create the build directory, set up the pico-sdk path, and build
       - run: |
           mkdir build
           cd build
-          cmake -G Ninja ..
+          cmake -G Ninja .. -DPICO_SDK_PATH=../pico-sdk
           ninja
+          
+      # Upload the generated UF2 firmware file as an artifact
       - uses: actions/upload-artifact@v4
         with:
           name: firmware.uf2
-          path: ./**/*.uf2
+          path: build/**/*.uf2

@@ -33,8 +33,8 @@ target_include_directories(LKICK PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/src/analogRead
         )
 
-add_subdirectory(src/PicoLed)
-add_subdirectory(FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040 FreeRTOS-Kernel)
+#add_subdirectory(src/PicoLed)
+#add_subdirectory(FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040 FreeRTOS-Kernel)
 target_link_libraries(LKICK pico_stdlib pico_multicore hardware_adc hardware_i2c FreeRTOS-Kernel FreeRTOS-Kernel-Heap4 tinyusb_device tinyusb_board PicoLed hardware_flash)
 #pico_enable_stdio_uart(LKICK 1)
 pico_add_extra_outputs(LKICK)

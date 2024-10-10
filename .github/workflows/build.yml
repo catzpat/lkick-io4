@@ -6,8 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           submodules: 'recursive'
       - run: |
           sudo apt update
@@ -17,7 +18,30 @@ jobs:
           cd build
           cmake -G Ninja ..
           ninja
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v2
+        with:
+          name: firmware.uf2
+          path: ./**/*.uf2name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+      - run: |
+          sudo apt update
+          sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential ninja-build
+      - run: |
+          mkdir build
+          cd build
+          cmake -G Ninja ..
+          ninja
+      - uses: actions/upload-artifact@v2
         with:
           name: firmware.uf2
           path: ./**/*.uf2

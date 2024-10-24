@@ -20,8 +20,8 @@ namespace component {
             0, 0, 0, 0, 0};
 
     const uint8_t SWITCH_INDEX[10] = {
-            0, 0, 0, 1, 1,
-            0, 1, 0, 0, 0
+            1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1
     };
 
     const uint8_t SWITCH_OFFSET[10] = {
@@ -81,7 +81,7 @@ namespace component {
         void set_led(uint ledData) {
             for (auto i = 0; i < 3; i++) {
                 // Left1, Left2, Left3, Right1, Right2, Right3
-                lightColors.setPixelColor(i + 3, PicoLed::RGB(
+                lightColors.setPixelColor(i, PicoLed::RGB(
                         ((ledData >> bitPosMap[9 + i * 3]) & 1) * 255,
                         ((ledData >> bitPosMap[9 + i * 3 + 1]) & 1) * 255,
                         ((ledData >> bitPosMap[9 + i * 3 + 2]) & 1) * 255

@@ -37,7 +37,7 @@ public:
 
 private:
     int pin;
-    int analogResolution = 4096;
+    int analogResolution = 1024;
     float snapMultiplier;
     bool sleepEnable;
     float activityThreshold = 7.0;

@@ -40,9 +40,9 @@ namespace component {
                                                           11, 6, PicoLed::FORMAT_GRB);
 
     bool hasI2cLever = false;
-    uint8_t addr = 0b0000110;
+    uint8_t addr = 0b0001110;
     uint8_t reg1 = 0x03, reg2 = 0x04;
-    ResponsiveAnalogRead analog(LEVER_PIN, true , 0.02);
+    ResponsiveAnalogRead analog(LEVER_PIN, true , 0.000005);
     namespace ongeki_hardware {
         void init() {
             for (unsigned char i: PIN_MAP) {

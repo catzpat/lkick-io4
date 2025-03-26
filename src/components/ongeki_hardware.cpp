@@ -182,7 +182,7 @@ namespace component {
                 i2c_read_blocking(i2c_default, addr, &result2, 1, false);
 
                 uint16_t finalResult = (result1 << 8) + result2;
-                finalResult = finalResult > 16383 ? 65535 : finalResult << 2;
+                finalResult = finalResult > 16383 ? 35535 : finalResult << 2;
                 finalResult = ~finalResult;
                 data->analog[0] = *(int16_t *) &finalResult;
                 data->rotary[0] = *(int16_t *) &finalResult;

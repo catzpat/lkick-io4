@@ -38,7 +38,7 @@ jobs:
           ninja
 
       # Upload the generated UF2 file as an artifact
-      - uses: actions/upload-artifact@v3  # Corrected to v3
+      - uses: actions/upload-artifact@v4  # Corrected to v3
         with:
           name: firmware.uf2
           path: build/**/*.uf2

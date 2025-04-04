@@ -153,7 +153,7 @@ namespace component {
             rg = false;
 
             for (auto i = 0; i < 10; i++) {
-                bool read = (i == 3 || i == 8) ? gpio_get(PIN_MAP[i]) : gpio_get(PIN_MAP[i]) ^ 1;
+                auto read = gpio_get(PIN_MAP[i]) ^ 1;
                 if (read) {
                     data->switches[SWITCH_INDEX[i]] += 1 << SWITCH_OFFSET[i];
                 }

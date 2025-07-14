@@ -1,7 +1,5 @@
 #include "stdinclude.h"
-#define configUSE_CORE_AFFINITY 1
 
-#include "pico/multicore.h"
 namespace component {
     namespace serial {
         stream streams[CFG_TUD_CDC] = {
@@ -10,17 +8,18 @@ namespace component {
         };
 
 
-        [[noreturn]] void core1(){
+        [[noreturn]] void led_board(void *pVoid){
             led_board::init(&component::serial::streams[1]);
             while(true){
                 led_board::update();
+                vTaskDelay(2 / portTICK_PERIOD_MS);
             }
         }
 
         void init() {
-            xTaskCreate(component::serial::aimeUpdate, "aime", 2048, NULL, 6, NULL);
-
-            multicore_launch_core1(core1);
+            constexpr UBaseType_t core1_CoreAffinityMask = (1 << 1);
+            xTaskCreateAffinitySet(component::serial::aimeUpdate, "aime", 2048, nullptr, 6, core1_CoreAffinityMask, nullptr);
+            xTaskCreateAffinitySet(component::serial::led_board, "led_board", 4096, nullptr, 6, core1_CoreAffinityMask, nullptr);
         }
 
         [[noreturn]] void aimeUpdate(void *pVoid) {

@@ -10,9 +10,9 @@ namespace led_board {
 
 
     auto rightColors = PicoLed::addLeds<PicoLed::WS2812B>(pio1, 1,
-                                                          RSIDE_RGB_PIN, 6, PicoLed::FORMAT_GRB);
+                                                          RSIDE_RGB_PIN, 8, PicoLed::FORMAT_GRB);
     auto leftColors = PicoLed::addLeds<PicoLed::WS2812B>(pio1, 2,
-                                                         LSIDE_RGB_PIN, 6, PicoLed::FORMAT_GRB);
+                                                         LSIDE_RGB_PIN, 8, PicoLed::FORMAT_GRB);
 
     void set_color(uint8_t lr, uint8_t lg, uint8_t lb, uint8_t rr, uint8_t rg, uint8_t rb) {
         leftColors.fill(PicoLed::RGB(lr, lg, lb));

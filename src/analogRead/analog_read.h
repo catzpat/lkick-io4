@@ -11,11 +11,11 @@ public:
     //   but doing so may cause more noise to seep through if sleep is not enabled
 
     ResponsiveAnalogRead(){};  //default constructor must be followed by call to begin function
-    ResponsiveAnalogRead(int pin, bool sleepEnable, float snapMultiplier = 0.01){
+    ResponsiveAnalogRead(int pin, bool sleepEnable, float snapMultiplier = 0.8){
         begin(pin, sleepEnable, snapMultiplier);
     };
 
-    void begin(int pin, bool sleepEnable, float snapMultiplier = 0.01);  // use with default constructor to initialize
+    void begin(int pin, bool sleepEnable, float snapMultiplier = 0.8);  // use with default constructor to initialize
 
     inline int getValue() { return responsiveValue; } // get the responsive value from last update
     inline int getRawValue() { return rawValue; } // get the raw analogRead() value from last update

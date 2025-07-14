@@ -9,7 +9,9 @@ namespace component {
         output_keyboard_t output_keyboard_data;
 
         void usb_init() {
-            xTaskCreate(tud, "tud", 2048, NULL, 10, NULL);
+            constexpr UBaseType_t core0_CoreAffinityMask = (1 << 0);
+            xTaskCreateAffinitySet(tud, "tud", 2048, nullptr, 10, core0_CoreAffinityMask, nullptr);
+            xTaskCreateAffinitySet(lever_sampling, "lever_sampling", 2048, nullptr, 10, core0_CoreAffinityMask, nullptr);
         }
 
         [[noreturn]] void tud(void *pVoid) {
@@ -68,6 +70,13 @@ namespace component {
                 }
                 last_mode = this_mode;
                 vTaskDelay(6 / portTICK_PERIOD_MS);
+            }
+        }
+
+        [[noreturn]] void lever_sampling(void *pVoid) {
+            while (true) {
+                component::ongeki_hardware::update_analog();
+                vTaskDelay(1 / portTICK_PERIOD_MS);
             }
         }
 

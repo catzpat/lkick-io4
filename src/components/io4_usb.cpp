@@ -8,11 +8,13 @@ namespace component {
         output_t output_data;
         output_keyboard_t output_keyboard_data;
 
-        void usb_init() {
-            constexpr UBaseType_t core0_CoreAffinityMask = (1 << 0);
-            xTaskCreateAffinitySet(tud, "tud", 2048, nullptr, 10, core0_CoreAffinityMask, nullptr);
-            xTaskCreateAffinitySet(lever_sampling, "lever_sampling", 2048, nullptr, 10, core0_CoreAffinityMask, nullptr);
-        }
+       void usb_init() {
+    // constexpr UBaseType_t core0_CoreAffinityMask = (1 << 0); // Bỏ nếu không dùng
+
+    xTaskCreate(tud, "tud", 2048, nullptr, 10, nullptr);
+    xTaskCreate(lever_sampling, "lever_sampling", 2048, nullptr, 10, nullptr);
+}
+
 
         [[noreturn]] void tud(void *pVoid) {
             using namespace component::config;

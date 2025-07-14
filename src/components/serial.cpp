@@ -17,10 +17,12 @@ namespace component {
         }
 
         void init() {
-            constexpr UBaseType_t core1_CoreAffinityMask = (1 << 1);
-            xTaskCreateAffinitySet(component::serial::aimeUpdate, "aime", 2048, nullptr, 6, core1_CoreAffinityMask, nullptr);
-            xTaskCreateAffinitySet(component::serial::led_board, "led_board", 4096, nullptr, 6, core1_CoreAffinityMask, nullptr);
-        }
+    // constexpr UBaseType_t core1_CoreAffinityMask = (1 << 1);  // Bỏ nếu không dùng
+
+    xTaskCreate(component::serial::aimeUpdate, "aime", 2048, nullptr, 6, nullptr);
+    xTaskCreate(component::serial::led_board, "led_board", 4096, nullptr, 6, nullptr);
+}
+
 
         [[noreturn]] void aimeUpdate(void *pVoid) {
             aime_reader::init(&streams[0]);

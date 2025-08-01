@@ -13,8 +13,8 @@ namespace component {
     };
 
     const uint8_t PIN_BIT[10] = {
-        1, 1, 1, 0, 0,
-        1, 1, 1, 0, 0
+        1, 1, 1, 0, 1,
+        1, 1, 1, 0, 1
     };
 
     const uint8_t SWITCH_INDEX[10] = {

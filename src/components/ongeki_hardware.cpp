@@ -8,7 +8,7 @@
 
 namespace component {
     const uint8_t PIN_MAP[10] = {
-        2, 4, 6, 14, 3, // L: A B C SIDE MENU
+        2, 4, 6, 14, 3, // L: A B C SIDE MENU 11/11 rebuild
         10, 12, 13, 8, 7  // R: A B C SIDE MENU
     };
 
